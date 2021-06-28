@@ -1,0 +1,26 @@
+{
+  "name": "kata-roman-numerals",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava --tap | tap-nyan",
+    "test:watch": "ava --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mogztter/kata-roman-numerals.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mogztter/kata-roman-numerals/issues"
+  },
+  "homepage": "https://github.com/Mogztter/kata-roman-numerals#readme",
+  "devDependencies": {
+    "ava": "^3.15.0",
+    "standard": "^16.0.3",
+    "tap-nyan": "^1.1.0"
+  }
+}

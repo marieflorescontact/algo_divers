@@ -1,0 +1,59 @@
+= Numération romaine
+
+Permet de convertir des "chiffres" romains (i.e. les signes I, V, X, L, C, D et M) en nombres.
+
+== Contribuer
+
+=== Prérequis
+
+Télécharger et installer la dernière version LTS de https://nodejs.org/en/[Node].
+Une fois installé, ouvrir un terminal et exécuter la commande ci-dessous pour vérifier que Node est correctement installé :
+
+ $ node -v
+
+=== Installer les dépendances
+
+ $ npm i
+
+=== Lancer les tests
+
+ $ npm t
+
+== Objectif
+
+Implémenter la méthode `toNumeric` dans le fichier `index.js` pour que l'ensemble des tests passent.
+Les tests sont définis dans le fichier `test.js`.
+
+== Notation romaine classique
+
+[cols="1,1",opts=header]
+|====
+|Chiffre romain
+|Valeur
+
+|I
+|1
+
+|V
+|5
+
+|X
+|10
+
+|X
+|10
+
+|L
+|50
+
+|C
+|100
+
+|D
+|500
+
+|M
+|1000
+|====
+
+
