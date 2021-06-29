@@ -19,20 +19,20 @@ function charToInt(str){
       case 'X' : 
         return 10
         break
-      case 'M' : 
-        return 1000
+      case 'L' : 
+        return 50
         break
       case 'C' : 
         return 100
         break
-      case 'L' : 
-        return 50
-        break
       case 'D' : 
         return 500
         break
+      case 'M' : 
+        return 1000
+        break
       default :
-      return -1
+        return -1
     }
 }
 
@@ -48,15 +48,15 @@ const toNumeric = (romanNumeral) => {
       return 'error'
     }
     if(charToInt(romanNumeral[i]) < charToInt(romanNumeral[i+1])){
-      if(charToInt(romanNumeral[i]) == 1 && charToInt(romanNumeral[i+1]) == 5 || charToInt(romanNumeral[i+1]) == 10 ){
+      if(romanNumeral[i] == 'I' && romanNumeral[i+1] == 'V' || romanNumeral[i+1] == 'X' ){
         sum += charToInt(romanNumeral[i+1]) - charToInt(romanNumeral[i])
         i++
       }
-      if(charToInt(romanNumeral[i]) == 10 && charToInt(romanNumeral[i+1]) == 50 || charToInt(romanNumeral[i+1]) == 100){
+      if(romanNumeral[i] == 'X' && romanNumeral[i+1] == 'L' || romanNumeral[i+1] == 'C'){
         sum += charToInt(romanNumeral[i+1]) - charToInt(romanNumeral[i])
         i++
       }
-      if(charToInt(romanNumeral[i]) == 100 && charToInt(romanNumeral[i+1]) == 500 || charToInt(romanNumeral[i+1]) == 1000){
+      if(romanNumeral[i] == 'C' && romanNumeral[i+1] == 'D' || romanNumeral[i+1] == 'M'){
         sum += charToInt(romanNumeral[i+1]) - charToInt(romanNumeral[i])
         i++
       }
