@@ -67,16 +67,25 @@ test('subtractive notation CMXCIV', t => {
   t.is(toNumeric('CMXCIV'), 994)
 })
 
-//Pattern error
+// Pattern error
 
 test('empty string', t => {
-  t.is(toNumeric(''), 'error')
+  const error = t.throws(() => {
+    toNumeric('')
+  }, { instanceOf: Error })
+  t.is(error.message, 'romanNumeral must not be empty and contains only [I, V, X,C, D, L, M]')
 })
 
 test('invalid characters', t => {
-  t.is(toNumeric('Ab2'), 'error')
+  const error = t.throws(() => {
+    toNumeric('Ab2')
+  }, { instanceOf: Error })
+  t.is(error.message, 'romanNumeral must not be empty and contains only [I, V, X,C, D, L, M]')
 })
 
 test('max 3 same characters except for M', t => {
-  t.is(toNumeric('IIII'), 'error')
+  const error = t.throws(() => {
+    toNumeric('IIII')
+  }, { instanceOf: Error })
+  t.is(error.message, 'romanNumeral must not contain more than 3 times the same roman numeral (except for M)')
 })
