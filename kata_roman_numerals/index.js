@@ -1,3 +1,44 @@
+const romanNumeralValues = {
+  I: 1,
+  V: 5,
+  X: 10,
+  L: 50,
+  C: 100,
+  D: 500,
+  M: 1000
+}
+
+const substractive = {
+  I: ['V', 'X'],
+  X: ['L', 'C'],
+  C: ['D', 'M']
+}
+
+/**
+ * @param {string} str
+ * @returns {number}
+ */
+function charToInt (str) {
+  return romanNumeralValues[str] || -1
+}
+
+const noFourRepeatRegex = /I{4,}|V{4,}|X{4,}|C{4,}|D{4,}|L{4,}/
+const validCharactersRegex = /[IVXCDLM]/
+
+function checkNotMoreThan3 (romanNumeral) {
+  if (romanNumeral.match(noFourRepeatRegex)) {
+    throw new Error('romanNumeral must not contain more than 3 times the same roman numeral (except for M)')
+  }
+}
+
+function checkValid (romanNumeral) {
+  if (!romanNumeral.match(validCharactersRegex) || romanNumeral === '') {
+    throw new Error('romanNumeral must not be empty and contains only [I, V, X,C, D, L, M]')
+  }
+  // ne doit pas contenir plus de 3 fois le même chiffre romain sauf pour les milliers (M)
+  checkNotMoreThan3(romanNumeral)
+}
+
 /**
  * Permet de convertir un chiffre romain en nombre.
  * @example
@@ -8,64 +49,29 @@
  * @param {string} romanNumeral
  * @returns {Number}
  */
-function charToInt(str){
-    switch (str){
-      case 'I' : 
-        return 1
-        break
-      case 'V' : 
-        return 5
-        break
-      case 'X' : 
-        return 10
-        break
-      case 'L' : 
-        return 50
-        break
-      case 'C' : 
-        return 100
-        break
-      case 'D' : 
-        return 500
-        break
-      case 'M' : 
-        return 1000
-        break
-      default :
-        return -1
-    }
-}
-
 const toNumeric = (romanNumeral) => {
-  const pattern = /[IVXCDLM]/
-  if (!romanNumeral.match(pattern) || romanNumeral == ''){
-    return 'error'
-  }
+  checkValid(romanNumeral)
 
- let sum = 0
-  for (let i = 0; i < romanNumeral.length; i++){
-    if (romanNumeral[i] != 'M' && romanNumeral[i] == romanNumeral[i+1] && romanNumeral[i] == romanNumeral[i+2] && romanNumeral[i] == romanNumeral[i+3]){
-      return 'error'
+  let sum = 0
+  const romanNumerals = romanNumeral.split('')
+  for (const [i, currentRomanNumeral] of romanNumerals.entries()) {
+    const nextRomanNumeral = romanNumeral[i + 1]
+    if (i < romanNumerals.length - 1) {
+      if (charToInt(currentRomanNumeral) < charToInt(nextRomanNumeral)) {
+        const subs = substractive[currentRomanNumeral]
+        if (subs && subs.includes(nextRomanNumeral)) {
+          sum -= charToInt(currentRomanNumeral)
+        } else {
+          throw new Error(`Invalid roman numeral: ${romanNumeral}`)
+        }
+      } else {
+        sum += charToInt(currentRomanNumeral)
+      }
+    } else {
+      sum += charToInt(currentRomanNumeral)
     }
-    if(charToInt(romanNumeral[i]) < charToInt(romanNumeral[i+1])){
-      if(romanNumeral[i] == 'I' && romanNumeral[i+1] == 'V' || romanNumeral[i+1] == 'X' ){
-        sum += charToInt(romanNumeral[i+1]) - charToInt(romanNumeral[i])
-        i++
-      }
-      if(romanNumeral[i] == 'X' && romanNumeral[i+1] == 'L' || romanNumeral[i+1] == 'C'){
-        sum += charToInt(romanNumeral[i+1]) - charToInt(romanNumeral[i])
-        i++
-      }
-      if(romanNumeral[i] == 'C' && romanNumeral[i+1] == 'D' || romanNumeral[i+1] == 'M'){
-        sum += charToInt(romanNumeral[i+1]) - charToInt(romanNumeral[i])
-        i++
-      }
-    }
-    else if (charToInt(romanNumeral[i]) >= charToInt(romanNumeral[i+1])){
-      sum += charToInt(romanNumeral[i])
-    }  
   }
-  return sum 
+  return sum
 }
 
 module.exports = {
